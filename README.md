@@ -1,65 +1,50 @@
-# Myopia Training App 👁️🎯
+# Myopia App - Eye Tracking Exercise
 
-**Dual-Purpose Visual Optimization Platform**  
-*Improve eye health while honing competitive gaming skills*
+![Eye Tracking Exercise Demo](background/blackandwhite.png)
 
-![App Screenshot](background/blackandwhite.png)
+A web application designed to help with myopia (nearsightedness) through guided eye tracking exercises.
 
-## 🚀 Features
+## Features
 
-### 👁️ Eye Health Focus
-- 25+ Scientifically-designed eye movement patterns
-- Progressive difficulty system for myopia management
-- Session tracking with visual acuity metrics
-- Ambient audio therapy integration
+- **Multiple Movement Patterns**: Choose from 20+ different movement patterns (circles, figures eights, random bounces, etc.)
+- **Customizable Settings**:
+  - Adjustable speed and object size
+  - Customizable colors and backgrounds
+  - Option to use custom images
+- **Progress Tracking**: View your exercise history and duration
+- **Responsive Design**: Works on desktop and mobile devices
 
-### 🎮 Gaming Performance
-- **FPS Training Modes**
-  - Target Acquisition Drills
-  - Recoil Control Simulations  
-  - Peripheral Awareness Challenges
-- Real-time Performance Analytics:
-  ```javascript
-  {
-    "reactionTime": "142ms avg", 
-    "trackingPrecision": "93%",
-    "focusStamina": "18min peak"
-  }
-  ```
-- Customizable scenarios mirroring popular FPS games
+## How to Use
 
-## 📈 Proven Benefits
-||General Users|Gamers|
-|---|---|---|
-|Daily Use|✅ Slows myopia progression|✅ 17% faster target acquisition|
-|Weekly Use|✅ Reduces eye strain|✅ 22% accuracy improvement|
-|Metrics|Visual acuity tracking|K/D ratio correlations|
+1. Open [index.html](index.html) in your browser
+2. Configure your exercise settings:
+   - Select a movement pattern
+   - Adjust speed and object appearance
+   - Choose a background
+3. Click "Start" to begin the exercise
+4. Follow the moving object with your eyes
+5. View your progress history on [progress.html](progress.html)
 
-## 🛠️ Usage
+## Technical Details
 
-1. Launch the app: `open index.html`
-2. Configure exercise parameters
-3. Select gaming performance mode
-4. Review session analytics in Progress page
+- Built with HTML5, CSS3, and vanilla JavaScript
+- No external dependencies
+- Uses localStorage for saving progress data
+- Responsive design with CSS media queries
 
-## 📊 Sample Gaming Dashboard
-```mermaid
-pie title Session Metrics
-    "Reaction Time" : 35
-    "Tracking Precision" : 45
-    "Focus Duration" : 20
-```
+## Hosting Options
 
-## 🔍 Scientific Backing
-> "Dynamic visual acuity training improves both ophthalmic health and esports performance" - *Journal of Behavioral Optometry (2024)*
+This app is currently hosted on GitHub Pages:
+[https://bitgineer.github.io/myopia-app/](https://bitgineer.github.io/myopia-app/)
 
-## 📥 Installation
-```bash
-git clone https://github.com/yourusername/myopia-app.git
-cd myopia-app
-open index.html
-```
+## Development
 
-## 📜 License
-MIT © 2025 Myopia App Contributors  
-*Disclaimer: Results vary based on consistent training*
+To modify or contribute:
+1. Clone the repository
+2. Open files in your preferred code editor
+3. Test changes locally by opening index.html
+4. Commit and push changes to GitHub
+
+## License
+
+MIT License - Free for personal and educational use
