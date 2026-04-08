@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eye tracking exercises to help with myopia">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <title>Myopia App - Eye Tracking Exercise</title>
+  <script type="module" crossorigin src="/assets/main-CgyJdFqG.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/storage-XSAGXOmD.js">
+  <link rel="stylesheet" crossorigin href="/assets/storage-MGf9eb6X.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+<body>
+  <div id="app">
+    <!-- Instructions -->
+    <p id="instructions">Click ⚙️ Settings to configure and Start</p>
+
+    <!-- Exercise Area -->
+    <div id="exercise-area">
+      <div id="moving-object"></div>
+    </div>
+
+    <!-- UI Panel Overlay -->
+    <div id="ui-panel-overlay"></div>
+    
+    <!-- UI Panel -->
+    <div id="ui-panel" class="hidden">
+      <div id="ui-panel-header">
+        <h2>⚙️ Settings</h2>
+        <button id="ui-panel-close" aria-label="Close settings">✕</button>
+      </div>
+      <div id="ui-panel-content">
+        <!-- Movement Settings -->
+        <fieldset>
+          <legend>Movement</legend>
+          
+          <div>
+            <label for="pattern">Pattern:</label>
+            <select id="pattern">
+              <option value="random">Random Bounce</option>
+              <option value="horizontal">Horizontal Line</option>
+              <option value="vertical">Vertical Line</option>
+              <option value="circle">Circle</option>
+              <option value="oval">Oval</option>
+              <option value="figureEight">Figure Eight</option>
+              <option value="triangle">Triangle</option>
+              <option value="squarePath">Square Path</option>
+              <option value="rectangle">Rectangle Path</option>
+              <option value="parallelogram">Parallelogram Path</option>
+              <option value="rhombus">Rhombus Path</option>
+              <option value="trapezoid">Trapezoid Path</option>
+              <option value="kite">Kite Path</option>
+              <option value="pentagon">Pentagon Path</option>
+              <option value="hexagon">Hexagon Path</option>
+              <option value="heptagon">Heptagon Path</option>
+              <option value="octagon">Octagon Path</option>
+              <option value="nonagon">Nonagon Path</option>
+              <option value="decagon">Decagon Path</option>
+              <option value="hexagram">Hexagram (Star)</option>
+              <option value="decagram">Decagram (Star)</option>
+              <option value="superellipse">Superellipse</option>
+              <option value="deltoid">Deltoid</option>
+              <option value="randomized">Randomized Smooth</option>
+              <option value="peekaboo">Peek-a-boo</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="speed">Speed:</label>
+            <select id="speed">
+              <option value="1">Slow</option>
+              <option value="2" selected>Medium</option>
+              <option value="4">Fast</option>
+              <option value="8">Very Fast</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="bounce-toggle">Bounce:</label>
+            <input type="checkbox" id="bounce-toggle">
+            <label for="bounce-intensity" class="sub-label">Intensity:</label>
+            <input type="range" id="bounce-intensity" min="1" max="10" value="3" disabled>
+          </div>
+        </fieldset>
+
+        <!-- Object Settings -->
+        <fieldset>
+          <legend>Object</legend>
+          
+          <div>
+            <label for="object-shape">Shape:</label>
+            <select id="object-shape">
+              <option value="circle" selected>Circle</option>
+              <option value="square">Square</option>
+              <option value="image">Custom Image</option>
+            </select>
+          </div>
+          
+          <div id="object-color-control">
+            <label for="object-color">Color:</label>
+            <input type="color" id="object-color" value="#0000ff">
+          </div>
+          
+          <div id="object-image-control" style="display: none;">
+            <label for="object-image">Image:</label>
+            <input type="file" id="object-image" accept="image/*">
+          </div>
+          
+          <div>
+            <label for="object-size">Size:</label>
+            <input type="range" id="object-size" min="10" max="100" value="25" step="1">
+            <span id="object-size-value">25px</span>
+          </div>
+          
+          <div>
+            <label for="object-opacity">Opacity:</label>
+            <input type="range" id="object-opacity" min="0.1" max="1.0" value="1.0" step="0.05">
+            <span id="object-opacity-value">1.0</span>
+          </div>
+        </fieldset>
+
+        <!-- Background Settings -->
+        <fieldset>
+          <legend>Background</legend>
+          
+          <div>
+            <label for="bg-type">Type:</label>
+            <select id="bg-type">
+              <option value="color" selected>Color</option>
+              <option value="preset">Preset Image</option>
+              <option value="custom">Custom Image</option>
+            </select>
+          </div>
+          
+          <div id="bg-color-control">
+            <label for="bg-color">Color:</label>
+            <input type="color" id="bg-color" value="#e9e9e9">
+          </div>
+          
+          <div id="bg-preset-control" style="display: none;">
+            <label for="bg-preset">Preset:</label>
+            <select id="bg-preset">
+              <option value="background/blackandwhite.png">Black & White Pattern</option>
+            </select>
+          </div>
+          
+          <div id="bg-custom-control" style="display: none;">
+            <label for="bg-custom-input">Image:</label>
+            <input type="file" id="bg-custom-input" accept="image/*">
+          </div>
+          
+          <div>
+            <label for="bg-loop-toggle">Loop:</label>
+            <input type="checkbox" id="bg-loop-toggle" disabled>
+          </div>
+        </fieldset>
+
+        <!-- Audio Settings -->
+        <fieldset>
+          <legend>Audio</legend>
+          
+          <div>
+            <label for="music-source">Music:</label>
+            <select id="music-source">
+              <option value="none" selected>None</option>
+              <option value="preset">Preset</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          
+          <div id="music-preset-control" style="display: none;">
+            <label for="music-preset">Track:</label>
+            <select id="music-preset">
+              <option value="music/Elysian Focus (The Holographic Mind Series).mp3">Elysian Focus</option>
+              <option value="music/Enhanced Visual Processing.mp3">Enhanced Visual Processing</option>
+            </select>
+          </div>
+          
+          <div id="music-custom-control" style="display: none;">
+            <label for="music-custom-input">File:</label>
+            <input type="file" id="music-custom-input" accept="audio/*">
+          </div>
+          
+          <div>
+            <label for="music-volume">Volume:</label>
+            <input type="range" id="music-volume" min="0" max="1" step="0.01" value="0.5">
+            <span id="music-volume-value">0.50</span>
+          </div>
+          
+          <p class="disclaimer">
+            Disclaimer: By uploading custom content, you affirm you own the rights/licenses.
+          </p>
+        </fieldset>
+
+        <!-- Action Controls -->
+        <div id="action-controls">
+          <button id="start-button">Start</button>
+          <button id="pause-button" disabled>Pause</button>
+          <button id="stop-button" disabled>Stop</button>
+          <div id="timer">Time: <span id="session-time">0</span>s</div>
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- Floating Settings Button (outside panel) -->
+    <button id="ui-panel-handle" aria-label="Open settings">
+      <span>⚙️</span>
+      <span>Settings</span>
+    </button>
+  </div>
+
+</body>
+</html>
