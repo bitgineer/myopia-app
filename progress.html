@@ -1,113 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myopia App - Progress History</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Add specific styles for the progress table */
-        #progress-table {
-            width: 100%;
-            margin-top: 1rem;
-            border-collapse: collapse;
-        }
-        #progress-table th, #progress-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        #progress-table th {
-            background-color: #f2f2f2;
-        }
-        #no-history {
-            font-style: italic;
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your eye exercise progress">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <title>Myopia App - Progress</title>
 </head>
-<body>
-    <header>
-        <h1>Progress History</h1>
-        <nav>
-            <a href="index.html">Exercise</a> | 
-            <a href="progress.html">Progress</a>
-        </nav>
+<body class="bg-gray-50 min-h-screen">
+  <div id="app" class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Progress</h1>
+          <p class="text-gray-600 mt-1">Track your eye exercise journey</p>
+        </div>
+        <a href="index.html" class="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors font-medium">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Exercise
+        </a>
+      </div>
     </header>
 
-    <main>
-        <h2>Your Past Sessions</h2>
-        <div id="history-container">
-            <!-- Progress history will be loaded here -->
-            <p id="no-history">No history recorded yet.</p>
-            <table id="progress-table" style="display: none;">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Duration (seconds)</th>
-                        <th>Speed Setting</th>
-                        <th>Pattern</th>
-                    </tr>
-                </thead>
-                <tbody id="progress-body">
-                    <!-- Data rows will be inserted here -->
-                </tbody>
-            </table>
-        </div>
-    </main>
+    <!-- Stats -->
+    <section class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Overview</h2>
+      <div id="stats-container">
+        <!-- Stats injected by JS -->
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Myopia App</p>
-    </footer>
+    <!-- Chart -->
+    <section class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Activity Chart</h2>
+      <div id="chart-container">
+        <!-- Chart injected by JS -->
+      </div>
+    </section>
 
-    <!-- Include the tracking script to access getHistory -->
-    <script src="js/tracking.js"></script> 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const history = window.myopiaTracker.getHistory();
-            const tableBody = document.getElementById('progress-body');
-            const noHistoryMsg = document.getElementById('no-history');
-            const progressTable = document.getElementById('progress-table');
+    <!-- History -->
+    <section class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-gray-900">Session History</h2>
+        <button id="clear-history" class="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors">
+          Clear History
+        </button>
+      </div>
+      <div id="history-container">
+        <!-- History injected by JS -->
+      </div>
+    </section>
+  </div>
 
-            if (history.length > 0) {
-                noHistoryMsg.style.display = 'none';
-                progressTable.style.display = 'table'; // Show the table
-
-                // Sort history newest first
-                history.sort((a, b) => b.startTime - a.startTime); 
-
-                history.forEach(session => {
-                    const row = tableBody.insertRow();
-                    const date = new Date(session.startTime);
-                    
-                    const cellDate = row.insertCell();
-                    cellDate.textContent = date.toLocaleDateString();
-
-                    const cellTime = row.insertCell();
-                    cellTime.textContent = date.toLocaleTimeString();
-
-                    const cellDuration = row.insertCell();
-                    // Display duration in seconds, calculated from durationMs
-                    cellDuration.textContent = Math.round(session.durationMs / 1000);
-
-                    const cellSpeed = row.insertCell();
-                    // Map speed value back to text label
-                    let speedLabel = 'Unknown';
-                    if (session.speed === 1) speedLabel = 'Slow';
-                    else if (session.speed === 2) speedLabel = 'Medium';
-                    else if (session.speed === 4) speedLabel = 'Fast';
-                    cellSpeed.textContent = speedLabel + ` (${session.speed})`;
-
-                    const cellPattern = row.insertCell();
-                    // Display pattern - maybe map to nicer names later if needed
-                    cellPattern.textContent = session.pattern || 'N/A'; // Handle older data without pattern
-                });
-            } else {
-                noHistoryMsg.style.display = 'block';
-                progressTable.style.display = 'none';
-            }
-        });
-    </script>
+  <script type="module" src="/src/progress.ts"></script>
 </body>
 </html>
