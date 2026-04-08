@@ -6,6 +6,13 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        // Force service worker update
+        skipWaiting: true,
+        clientsClaim: true,
+        // Don't cache HTML files to allow updates
+        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/]
+      },
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
         name: 'Myopia App',
