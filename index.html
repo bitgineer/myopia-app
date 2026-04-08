@@ -18,8 +18,15 @@
       <div id="moving-object"></div>
     </div>
 
+    <!-- UI Panel Overlay -->
+    <div id="ui-panel-overlay"></div>
+    
     <!-- UI Panel -->
     <div id="ui-panel" class="hidden">
+      <div id="ui-panel-header">
+        <h2>⚙️ Settings</h2>
+        <button id="ui-panel-close" aria-label="Close settings">✕</button>
+      </div>
       <div id="ui-panel-content">
         <!-- Movement Settings -->
         <fieldset>
@@ -192,9 +199,13 @@
         </div>
       </div>
 
-      <!-- Panel Toggle Handle -->
-      <div id="ui-panel-handle">⚙️ Settings</div>
     </div>
+    
+    <!-- Floating Settings Button (outside panel) -->
+    <button id="ui-panel-handle" aria-label="Open settings">
+      <span>⚙️</span>
+      <span>Settings</span>
+    </button>
   </div>
 
   <script type="module" src="/src/main.ts"></script>

@@ -21,7 +21,9 @@ export class MyopiaApp {
   private movingObject!: HTMLElement;
   private instructions!: HTMLElement;
   private uiPanel!: HTMLElement;
-  private uiPanelHandle!: HTMLElement;
+  private uiPanelHandle!: HTMLButtonElement;
+  private uiPanelOverlay!: HTMLElement;
+  private uiPanelClose!: HTMLButtonElement;
   
   // Controls (initialized in constructor)
   private patternSelect!: HTMLSelectElement;
@@ -79,7 +81,9 @@ export class MyopiaApp {
     this.movingObject = document.getElementById('moving-object')!;
     this.instructions = document.getElementById('instructions')!;
     this.uiPanel = document.getElementById('ui-panel')!;
-    this.uiPanelHandle = document.getElementById('ui-panel-handle')!;
+    this.uiPanelHandle = document.getElementById('ui-panel-handle') as HTMLButtonElement;
+    this.uiPanelOverlay = document.getElementById('ui-panel-overlay')!;
+    this.uiPanelClose = document.getElementById('ui-panel-close') as HTMLButtonElement;
 
     this.patternSelect = document.getElementById('pattern') as HTMLSelectElement;
     this.speedSelect = document.getElementById('speed') as HTMLSelectElement;
@@ -107,6 +111,8 @@ export class MyopiaApp {
     this.pauseButton.addEventListener('click', () => this.pauseExercise());
     this.stopButton.addEventListener('click', () => this.stopExercise());
     this.uiPanelHandle.addEventListener('click', () => this.toggleUIPanel());
+    this.uiPanelClose?.addEventListener('click', () => this.toggleUIPanel());
+    this.uiPanelOverlay?.addEventListener('click', () => this.toggleUIPanel());
 
     // Pattern controls
     this.patternSelect.addEventListener('change', (e) => {
@@ -357,10 +363,25 @@ export class MyopiaApp {
   }
 
   private toggleUIPanel(): void {
-    this.uiPanel.classList.toggle('hidden');
-    this.uiPanelHandle.textContent = this.uiPanel.classList.contains('hidden') 
-      ? '⚙️ Settings' 
-      : '⬅️ Close';
+    const isHidden = this.uiPanel.classList.contains('hidden');
+    
+    if (isHidden) {
+      // Opening panel
+      this.uiPanel.classList.remove('hidden');
+      this.uiPanelOverlay?.classList.add('visible');
+      this.uiPanelHandle.innerHTML = '<span>⬅️</span><span>Close</span>';
+      this.uiPanelHandle.setAttribute('aria-label', 'Close settings');
+      // Prevent body scroll when panel is open on mobile
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Closing panel
+      this.uiPanel.classList.add('hidden');
+      this.uiPanelOverlay?.classList.remove('visible');
+      this.uiPanelHandle.innerHTML = '<span>⚙️</span><span>Settings</span>';
+      this.uiPanelHandle.setAttribute('aria-label', 'Open settings');
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
   }
 
   private calculateMoveAmount(delta: number): number {

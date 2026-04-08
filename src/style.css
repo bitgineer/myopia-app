@@ -93,38 +93,92 @@ main {
   border-radius: inherit;
 }
 
-/* UI Panel */
+/* UI Panel - Mobile-First Redesign */
 #ui-panel {
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  top: 0;
   left: 0;
-  width: auto;
-  min-width: 280px;
-  max-width: min(90vw, 500px);
-  max-height: calc(100vh - 20px);
-  background: rgba(51, 51, 51, 0.95);
+  width: 85vw;
+  max-width: 360px;
+  height: 100vh;
+  background: rgba(51, 51, 51, 0.98);
   color: #fff;
-  border-radius: 0 12px 12px 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 50;
+  z-index: 100;
   transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.4);
 }
 
 #ui-panel.hidden {
-  transform: translateX(calc(-100% + 40px));
+  transform: translateX(-100%);
 }
 
-#ui-panel:not(.hidden),
-#ui-panel:hover {
+#ui-panel:not(.hidden) {
   transform: translateX(0%);
 }
 
+/* Overlay backdrop when panel is open */
+#ui-panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+#ui-panel-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 #ui-panel-content {
-  padding: 15px;
+  padding: 20px;
   overflow-y: auto;
-  flex-grow: 1;
+  flex: 1;
+  padding-bottom: 100px; /* Space for handle */
+}
+
+/* Panel header for mobile */
+#ui-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #555;
+  background: rgba(68, 68, 68, 0.5);
+}
+
+#ui-panel-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+#ui-panel-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+#ui-panel-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #ui-panel fieldset {
@@ -265,27 +319,49 @@ main {
   color: #ccc;
 }
 
-/* Panel Toggle Handle */
+/* Floating Settings Button - Always Visible */
 #ui-panel-handle {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  background-color: rgba(51, 51, 51, 0.95);
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #3b82f6;
   color: #fff;
-  padding: 15px 8px;
-  border-radius: 0 12px 12px 0;
+  padding: 12px 20px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: bold;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-  flex-shrink: 0;
-  align-self: center;
-  transition: background-color 0.2s ease;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
   user-select: none;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  outline: none;
 }
 
-#ui-panel:hover #ui-panel-handle,
-#ui-panel:not(.hidden) #ui-panel-handle {
-  background-color: rgba(68, 68, 68, 0.95);
+#ui-panel-handle:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+#ui-panel-handle:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Active state when panel is open */
+#ui-panel:not(.hidden) ~ #ui-panel-handle,
+body:has(#ui-panel:not(.hidden)) #ui-panel-handle {
+  background-color: #dc2626;
+}
+
+#ui-panel:not(.hidden) ~ #ui-panel-handle:hover,
+body:has(#ui-panel:not(.hidden)) #ui-panel-handle:hover {
+  background-color: #b91c1c;
 }
 
 /* Disclaimer text */
@@ -297,19 +373,78 @@ main {
   text-align: left;
 }
 
-/* Responsive adjustments */
+/* Mobile-Optimized Settings Panel */
 @media (max-width: 640px) {
   #ui-panel {
-    min-width: 260px;
+    width: 90vw;
+    max-width: none;
+  }
+  
+  #ui-panel-content {
+    padding: 15px;
   }
   
   #ui-panel label {
-    width: 70px;
-    font-size: 0.8rem;
+    width: 80px;
+    font-size: 0.85rem;
   }
   
   #ui-panel select,
   #ui-panel input {
-    min-width: 80px;
+    min-width: 100px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  #ui-panel-handle {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  /* Larger touch targets for mobile */
+  #action-controls button {
+    min-height: 44px;
+    min-width: 70px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  #ui-panel {
+    width: 95vw;
+  }
+  
+  #ui-panel-handle {
+    bottom: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Desktop - larger screens */
+@media (min-width: 1024px) {
+  #ui-panel {
+    width: 340px;
+  }
+  
+  #ui-panel-handle {
+    bottom: 30px;
+    left: 30px;
+  }
+}
+
+/* Safe area support for notched phones */
+@supports (padding: max(0px)) {
+  #ui-panel {
+    padding-top: max(15px, env(safe-area-inset-top));
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
+  }
+  
+  #ui-panel-handle {
+    bottom: max(20px, env(safe-area-inset-bottom) + 10px);
+    left: max(20px, env(safe-area-inset-left) + 10px);
   }
 }
