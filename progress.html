@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your eye exercise progress">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <title>Myopia App - Progress</title>
+  <script type="module" crossorigin src="/assets/progress-Bjq6xoYl.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/storage-XSAGXOmD.js">
+  <link rel="stylesheet" crossorigin href="/assets/storage-MGf9eb6X.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+<body class="bg-gray-50 min-h-screen">
+  <div id="app" class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Progress</h1>
+          <p class="text-gray-600 mt-1">Track your eye exercise journey</p>
+        </div>
+        <a href="index.html" class="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors font-medium">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Exercise
+        </a>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Overview</h2>
+      <div id="stats-container">
+        <!-- Stats injected by JS -->
+      </div>
+    </section>
+
+    <!-- Chart -->
+    <section class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Activity Chart</h2>
+      <div id="chart-container">
+        <!-- Chart injected by JS -->
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-gray-900">Session History</h2>
+        <button id="clear-history" class="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors">
+          Clear History
+        </button>
+      </div>
+      <div id="history-container">
+        <!-- History injected by JS -->
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
